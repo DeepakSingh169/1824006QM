@@ -8,11 +8,11 @@ def radial_system(X,r,energy,potential,C,l):
 def radial_initial_conditions(r_min, l):
   return np.array([r_min**(l+1),(l+1)*(r_min**l)])
 
-def radial_rk4(r_min, r_max, h, energy, potential, C, l):
+def radial_residual(r_min,r_max,h,energy,potential,C,l):
   N = int(np.ceil((r_max-r_min)/h)) + 1
   r = np.linspace(r_min,r_max,N)
+  h = r[1] - r[0]
 
-  
   X = np.zeros((N,2))
   X[0] = radial_initial_conditions(r_min,l)
 
@@ -27,10 +27,6 @@ def radial_rk4(r_min, r_max, h, energy, potential, C, l):
 
         X[i+1] = X[i] + (k1+2*k2+2*k3+k4)/6
 
-  return X,r
-
-def radial_residul(r_min,r_max,h,energy,potential,C,l):
-  X,r = radial_rk4(r_min,r_max,h,energy,potential,C,l)
   residual = X[-1,0]
 
   return X,r,residual
