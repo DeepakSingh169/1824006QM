@@ -28,3 +28,9 @@ def radial_rk4(r_min, r_max, h, energy, potential, C, l):
         X[i+1] = X[i] + (k1+2*k2+2*k3+k4)/6
 
   return X,r
+
+def radial_residul(r_min,r_max,h,energy,potential,C,l):
+  X,r = radial_rk4(r_min,r_max,h,energy,potential,C,l)
+  residual = X[-1,0]
+
+  return X,r,residual
